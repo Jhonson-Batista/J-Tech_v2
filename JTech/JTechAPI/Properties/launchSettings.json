@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "JTechAPI": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:64074;http://localhost:64075"
+    }
+  }
+}
