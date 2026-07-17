@@ -19,4 +19,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\JTech.Domain\JTech.Domain.csproj" />
+    <ProjectReference Include="..\JTech.Infrastructure\JTech.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

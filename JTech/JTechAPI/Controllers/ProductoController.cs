@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using JTechAPI.DTOs;
-using JTechAPI.Models;
+using JTech.Domain.Entities;
+using JTech.Infrastructure.Interfaces;
+using JTech.Infrastructure.Models;
 
 namespace JTechAPI.Controllers
 {
@@ -8,60 +9,65 @@ namespace JTechAPI.Controllers
     [Route("api/[controller]")]
     public class ProductoController : ControllerBase
     {
-        private static List<Producto> productos = new List<Producto>();
-        private static int nextId = 1;
+        private readonly IProductoRepository _productoRepository;
+
+        public ProductoController(IProductoRepository productoRepository)
+        {
+            _productoRepository = productoRepository;
+        }
 
         [HttpGet]
-        public ActionResult<List<Producto>> GetAll()
+        public async Task<ActionResult<IEnumerable<Producto>>> GetAll()
         {
+            var productos = await _productoRepository.GetAllAsync();
             return Ok(productos);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Producto> GetById(int id)
+        public async Task<ActionResult<Producto>> GetById(int id)
         {
-            var producto = productos.FirstOrDefault(p => p.Id == id);
+            var producto = await _productoRepository.GetByIdAsync(id);
             if (producto == null) return NotFound();
             return Ok(producto);
         }
 
         [HttpPost]
-        public ActionResult<Producto> Create(ProductoDto dto)
+        public async Task<ActionResult> Create(ProductoModel model)
         {
             var producto = new Producto
             {
-                Id = nextId++,
-                Nombre = dto.Nombre,
-                IMEI = dto.IMEI,
-                Precio = dto.Precio,
-                Stock = dto.Stock,
-                MesGarantia = dto.MesGarantia,
-                MarcaId = dto.MarcaId
+                Nombre = model.Nombre,
+                IMEI = model.IMEI,
+                Precio = model.Precio,
+                Stock = model.Stock,
+                MesGarantia = model.MesGarantia,
+                MarcaId = model.MarcaId
             };
-            productos.Add(producto);
+            await _productoRepository.AddAsync(producto);
             return CreatedAtAction(nameof(GetById), new { id = producto.Id }, producto);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Producto> Update(int id, ProductoDto dto)
+        public async Task<ActionResult> Update(int id, ProductoModel model)
         {
-            var producto = productos.FirstOrDefault(p => p.Id == id);
+            var producto = await _productoRepository.GetByIdAsync(id);
             if (producto == null) return NotFound();
-            producto.Nombre = dto.Nombre;
-            producto.IMEI = dto.IMEI;
-            producto.Precio = dto.Precio;
-            producto.Stock = dto.Stock;
-            producto.MesGarantia = dto.MesGarantia;
-            producto.MarcaId = dto.MarcaId;
+            producto.Nombre = model.Nombre;
+            producto.IMEI = model.IMEI;
+            producto.Precio = model.Precio;
+            producto.Stock = model.Stock;
+            producto.MesGarantia = model.MesGarantia;
+            producto.MarcaId = model.MarcaId;
+            await _productoRepository.UpdateAsync(producto);
             return Ok(producto);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var producto = productos.FirstOrDefault(p => p.Id == id);
+            var producto = await _productoRepository.GetByIdAsync(id);
             if (producto == null) return NotFound();
-            productos.Remove(producto);
+            await _productoRepository.DeleteAsync(id);
             return NoContent();
         }
     }
