@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using JTech.Infrastructure.Context;
 using JTech.Infrastructure.Interfaces;
 using JTech.Infrastructure.Repositories;
 using JTech.Application.Contract;
 using JTech.Application.Services;
+using JTech.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
