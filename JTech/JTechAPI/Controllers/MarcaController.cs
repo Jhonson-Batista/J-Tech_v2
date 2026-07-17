@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using JTech.Domain.Entities;
-using JTech.Infrastructure.Interfaces;
-using JTech.Infrastructure.Models;
+using JTech.Application.Contract;
+using JTech.Application.Dtos.Marca;
 
 namespace JTechAPI.Controllers
 {
@@ -9,57 +8,48 @@ namespace JTechAPI.Controllers
     [Route("api/[controller]")]
     public class MarcaController : ControllerBase
     {
-        private readonly IMarcaRepository _marcaRepository;
+        private readonly IMarcaService _marcaService;
 
-        public MarcaController(IMarcaRepository marcaRepository)
+        public MarcaController(IMarcaService marcaService)
         {
-            _marcaRepository = marcaRepository;
+            _marcaService = marcaService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Marca>>> GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var marcas = await _marcaRepository.GetAllAsync();
+            var marcas = await _marcaService.GetAllAsync();
             return Ok(marcas);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Marca>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
-            var marca = await _marcaRepository.GetByIdAsync(id);
+            var marca = await _marcaService.GetByIdAsync(id);
             if (marca == null) return NotFound();
             return Ok(marca);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(MarcaModel model)
+        public async Task<ActionResult> Create(MarcaSaveDto dto)
         {
-            var marca = new Marca
-            {
-                Nombre = model.Nombre,
-                PaisOrigen = model.PaisOrigen
-            };
-            await _marcaRepository.AddAsync(marca);
-            return CreatedAtAction(nameof(GetById), new { id = marca.Id }, marca);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await _marcaService.AddAsync(dto);
+            return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, MarcaModel model)
+        public async Task<ActionResult> Update(int id, MarcaSaveDto dto)
         {
-            var marca = await _marcaRepository.GetByIdAsync(id);
-            if (marca == null) return NotFound();
-            marca.Nombre = model.Nombre;
-            marca.PaisOrigen = model.PaisOrigen;
-            await _marcaRepository.UpdateAsync(marca);
-            return Ok(marca);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await _marcaService.UpdateAsync(id, dto);
+            return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var marca = await _marcaRepository.GetByIdAsync(id);
-            if (marca == null) return NotFound();
-            await _marcaRepository.DeleteAsync(id);
+            await _marcaService.DeleteAsync(id);
             return NoContent();
         }
     }
