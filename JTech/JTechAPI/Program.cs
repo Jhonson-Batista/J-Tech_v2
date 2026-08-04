@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using JTech.Infrastructure.Context;
 using JTech.Infrastructure.Interfaces;
 using JTech.Infrastructure.Repositories;
+using JTech.Application.Contract;
+using JTech.Application.Services;
+using JTech.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IMarcaRepository, MarcaRepository>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 var app = builder.Build();
 

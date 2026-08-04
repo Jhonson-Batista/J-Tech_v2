@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="JTech.Application/JTech.Application.csproj" Id="840fa811-ae05-4cdd-9115-f0f51b9b9c52" />
   <Project Path="JTech.Domain/JTech.Domain.csproj" Id="ead7d217-d001-4d54-8437-ce6d7bd44c84" />
   <Project Path="JTech.Infrastructure/JTech.Infrastructure.csproj" Id="b069c1e7-3068-4dc1-96c4-0ef29375917b" />
   <Project Path="JTechAPI/JTechAPI.csproj" />

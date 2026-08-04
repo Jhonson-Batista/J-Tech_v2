@@ -1,6 +1,8 @@
-﻿namespace JTechAPI.DTOs
+﻿using JTech.Application.Dtos;
+
+namespace JTech.Application.Dtos.Producto
 {
-    public class ProductoDto
+    public class ProductoGetDto : DtoBase   
     {
         public string Nombre { get; set; }
         public string IMEI { get; set; }

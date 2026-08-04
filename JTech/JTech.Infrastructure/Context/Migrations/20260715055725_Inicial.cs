@@ -10,7 +10,7 @@ namespace JTechAPI.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            var createTableBuilder = migrationBuilder.CreateTable(
                 name: "Marcas",
                 columns: table => new
                 {

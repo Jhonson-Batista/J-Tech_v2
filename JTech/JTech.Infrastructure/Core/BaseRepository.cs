@@ -2,6 +2,7 @@
 using JTech.Domain.Core;
 using JTech.Infrastructure.Context;
 
+
 namespace JTech.Infrastructure.Core
 {
     public class BaseRepository<T> where T : BaseEntity

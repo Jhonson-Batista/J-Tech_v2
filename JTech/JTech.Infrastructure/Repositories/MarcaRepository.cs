@@ -1,7 +1,8 @@
 ﻿using JTech.Domain.Entities;
-using JTech.Infrastructure.Context;
 using JTech.Infrastructure.Interfaces;
 using JTech.Infrastructure.Core;
+using JTech.Infrastructure.Context;
+
 
 namespace JTech.Infrastructure.Repositories
 {

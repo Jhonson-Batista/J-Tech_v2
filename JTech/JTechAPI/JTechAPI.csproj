@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JTech.Application\JTech.Application.csproj" />
     <ProjectReference Include="..\JTech.Domain\JTech.Domain.csproj" />
     <ProjectReference Include="..\JTech.Infrastructure\JTech.Infrastructure.csproj" />
   </ItemGroup>
