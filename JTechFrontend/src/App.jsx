@@ -10,8 +10,8 @@ function App() {
         <div>
             <h1>J-Tech - Control de Inventario</h1>
             <nav>
-                <button onClick={() => setVista('marcas')}>Marcas</button>
-                <button onClick={() => setVista('productos')}>Productos</button>
+                    <button className={vista === 'marcas' ? 'active' : ''} onClick={() => setVista('marcas')}>Marcas</button>
+                    <button className={vista === 'productos' ? 'active' : ''} onClick={() => setVista('productos')}>Productos</button>
             </nav>
             {vista === 'marcas' && <MarcaList />}
             {vista === 'productos' && <ProductoList />}

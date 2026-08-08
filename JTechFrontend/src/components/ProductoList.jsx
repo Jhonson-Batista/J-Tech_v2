@@ -15,6 +15,7 @@ function ProductoList() {
     const [stock, setStock] = useState('')
     const [mesGarantia, setMesGarantia] = useState('')
     const [marcaId, setMarcaId] = useState('')
+    const [guardando, setGuardando] = useState(false)
     const [error, setError] = useState('')
 
     useEffect(() => {
@@ -25,18 +26,7 @@ function ProductoList() {
     const cargar = async () => {
         const res = await axios.get(API)
         setProductos(res.data)
-
-        try {
-            setError('')
-            await axios.post(API, { nombre, imei, precio: parseFloat(precio), stock: parseInt(stock), mesGarantia: parseInt(mesGarantia), marcaId: parseInt(marcaId) })
-            setNombre(''); setImei(''); setPrecio(''); setStock(''); setMesGarantia(''); setMarcaId('')
-            cargar()
-        } catch (err) {
-            setError('Error al guardar: revisa que todos los campos estén completos y correctos.')
-        }
-
     }
-
 
     const cargarMarcas = async () => {
         const res = await axios.get(API_MARCAS)
@@ -44,14 +34,36 @@ function ProductoList() {
     }
 
     const guardar = async () => {
-        await axios.post(API, { nombre, imei, precio: parseFloat(precio), stock: parseInt(stock), mesGarantia: parseInt(mesGarantia), marcaId: parseInt(marcaId) })
-        setNombre(''); setImei(''); setPrecio(''); setStock(''); setMesGarantia(''); setMarcaId('')
-        cargar()
+        if (guardando) return
+        setGuardando(true)
+        setError('')
+        try {
+            await axios.post(API, {
+                nombre,
+                imei,
+                precio: parseFloat(precio),
+                stock: parseInt(stock),
+                mesGarantia: parseInt(mesGarantia),
+                marcaId: parseInt(marcaId)
+            })
+            setNombre(''); setImei(''); setPrecio(''); setStock(''); setMesGarantia(''); setMarcaId('')
+            cargar()
+        } catch (err) {
+            setError('No se pudo guardar: revisa que todos los campos estén completos.')
+        } finally {
+            setGuardando(false)
+        }
     }
 
-    const eliminar = async (id) => {
-        await axios.delete(`${API}/${id}`)
-        cargar()
+    const eliminar = async (id, nombreProducto) => {
+        const confirmado = window.confirm(`¿Eliminar "${nombreProducto}"? Esta acción no se puede deshacer.`)
+        if (!confirmado) return
+        try {
+            await axios.delete(`${API}/${id}`)
+            cargar()
+        } catch (err) {
+            setError('No se pudo eliminar el producto. Intenta de nuevo.')
+        }
     }
 
     return (
@@ -66,8 +78,8 @@ function ProductoList() {
                 <option value="">Selecciona Marca</option>
                 {marcas.map(m => <option key={m.id} value={m.id}>{m.nombre}</option>)}
             </select>
-            <button onClick={guardar}>Guardar</button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <button onClick={guardar} disabled={guardando}>{guardando ? 'Guardando...' : 'Guardar'}</button>
+            {error && <p style={{ color: '#FB7185' }}>{error}</p>}
             <table border="1">
                 <thead>
                     <tr><th>Id</th><th>Nombre</th><th>IMEI</th><th>Precio</th><th>Stock</th><th>Garantía</th><th>Acciones</th></tr>
@@ -81,7 +93,7 @@ function ProductoList() {
                             <td>{p.precio}</td>
                             <td>{p.stock}</td>
                             <td>{p.mesGarantia}</td>
-                            <td><button onClick={() => eliminar(p.id)}>Eliminar</button></td>
+                            <td><button onClick={() => eliminar(p.id, p.nombre)}>Eliminar</button></td>
                         </tr>
                     ))}
                 </tbody>
