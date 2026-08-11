@@ -52,22 +52,22 @@ function Resumen({ irA }) {
 
             <div className="stats-grid">
                 <div className="stat-card">
-                    <span className="stat-icono">🏷️</span>
+                    <span className="stat-icono"></span>
                     <span className="stat-valor">{marcas.length}</span>
                     <span className="stat-label">Marcas registradas</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-icono">📱</span>
+                    <span className="stat-icono"></span>
                     <span className="stat-valor">{productos.length}</span>
                     <span className="stat-label">Productos registrados</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-icono">📦</span>
+                    <span className="stat-icono"></span>
                     <span className="stat-valor">{totalUnidades}</span>
                     <span className="stat-label">Unidades en stock</span>
                 </div>
                 <div className="stat-card">
-                    <span className="stat-icono">💰</span>
+                    <span className="stat-icono"></span>
                     <span className="stat-valor">RD$ {valorInventario.toLocaleString('es-DO', { maximumFractionDigits: 0 })}</span>
                     <span className="stat-label">Valor del inventario</span>
                 </div>
