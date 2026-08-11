@@ -211,3 +211,35 @@ p[style] {
     font-size: 0.85rem;
     margin-top: 12px !important;
 }
+
+.btn-editar {
+    background: transparent;
+    border: 1px solid #5EEAD4;
+    color: #5EEAD4;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-right: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+    .btn-editar:hover {
+        background: #5EEAD4;
+        color: #0B1220;
+    }
+
+.btn-cancelar {
+    background: transparent;
+    border: 1px solid #24304A;
+    color: #7C8AA5;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 10px 22px;
+    border-radius: 8px;
+}
+
+    .btn-cancelar:hover {
+        border-color: #7C8AA5;
+        color: #E6EDF7;
+    }
