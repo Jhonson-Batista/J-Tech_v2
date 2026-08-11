@@ -90,7 +90,7 @@ function ProductoList() {
     }
 
     return (
-        <div>
+        <div className="content-card">
             <h2>Productos</h2>
             <input placeholder="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
             <input placeholder="IMEI" value={imei} onChange={e => setImei(e.target.value)} />

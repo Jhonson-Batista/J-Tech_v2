@@ -67,7 +67,7 @@ function MarcaList() {
     }
 
     return (
-        <div>
+        <div className="content-card">
             <h2>Marcas</h2>
             <input placeholder="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
             <input placeholder="País de Origen" value={paisOrigen} onChange={e => setPaisOrigen(e.target.value)} />
